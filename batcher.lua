@@ -30,6 +30,16 @@ function char_to_ints(text)
     return alphabet, encoded
 end
 
+-- function for one hot encoding
+function ints_to_one_hot(ints, width)
+    local height = ints:size()[1]
+    local zeros = torch.zeros(height, width)
+    local indices = ints:view(-1, 1):long()
+    local one_hot = zeros:scatter(2, indices, 1)
+
+    return one_hot
+end
+
 -- function to generate chunks of encoded data based on chunk size
 function generate_chunks(encoded_text, chunk_size)
     local n_chunks = math.floor(encoded_text:size()[1]/chunk_size)
