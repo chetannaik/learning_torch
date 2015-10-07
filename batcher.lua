@@ -40,30 +40,53 @@ function ints_to_one_hot(ints, width)
     return one_hot
 end
 
--- function to generate chunks of encoded data based on chunk size
-function generate_chunks(encoded_text, chunk_size)
-    local n_chunks = math.floor(encoded_text:size()[1]/chunk_size)
-    local indices = torch.randperm(n_chunks)
---     local indices = torch.range(1, n_chunks)
-
+function make_chunk_iterator(encoded_text, indices, chunk_size, n_symbols)
     function co()
-        for i=1, n_chunks do
+        for i=1, indices:size(1) do
             local index = indices[i]
             local lower = (index - 1)*chunk_size
-            local upper = index*chunk_size
-            print("index: " .. index)
-            print("lower: " .. lower)
-            print("upper: " .. upper)
-            chunk = encoded_text[{{lower, upper}}]
+            local upper = lower + chunk_size - 1
+            local chunk = ints_to_one_hot(encoded_text[{{lower, upper}}], n_symbols)
             coroutine.yield(chunk)
         end
     end
 
-    return coroutine.create(co)
+    return coroutine.wrap(co)
+end
+
+function split_indices(indices, split_fractions)
+    local split_sizes = (split_fractions*indices:size(1)):long()
+    local split_points = torch.cat(torch.LongTensor{0}, split_sizes:cumsum())
+    local splits = {}
+    for i = 1, split_points:size(1) - 1 do
+        local lower, upper = split_points[i] + 1, split_points[i + 1]
+        splits[i] = indices[{{lower, upper}}]
+    end
+
+    return splits
+end
+
+function make_chunk_iterators(text, split_fractions, chunk_size)
+    local alphabet, encoded_text = char_to_ints(text)
+    local n_chunks = math.floor(#text/chunk_size)
+
+--     local indices = torch.range(1, n_chunks)
+    local indices = torch.randperm(n_chunks)
+    local splits = split_indices(indices, split_fractions)
+
+    local iterators = {}
+    for _, split in pairs(splits) do
+        iterator = make_chunk_iterator(encoded_text, split, chunk_size, #alphabet)
+        iterators[#iterators + 1] = iterator
+    end
+
+    return alphabet, iterators
 end
 
 local text = load_text()
-local alphabet, encoded = char_to_ints(text)
-local chunk_generator = generate_chunks(encoded, 10)
-print(coroutine.resume(chunk_generator))
-print(coroutine.resume(chunk_generator))
+local fractions = torch.Tensor{0.25, 0.75}
+local alphabet, iterators = make_chunk_iterators(text, fractions, 2)
+
+for i, iterator in pairs(iterators) do
+    print(iterator())
+end
