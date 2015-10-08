@@ -1,6 +1,9 @@
-local table = require 'table'
-local math = require 'math'
-local torch = require 'torch'
+require 'table'
+require 'math'
+require 'torch'
+require 'encoding'
+
+local batcher = {}
 
 -- function to read the text file
 function load_text()
@@ -9,35 +12,6 @@ function load_text()
     f:close()
 
     return text
-end
-
--- function to create character based vocalulary with unique id for every
--- character and return the vocabulary along with encoded dataset based on the
--- ids.
-function char_to_ints(text)
-    local alphabet = {}
-    local encoded = torch.Tensor(#text)
-
-    for i = 1, #text do
-        local c = text:sub(i, i)
-        if alphabet[c] == nil then
-            alphabet[#alphabet + 1] = c
-            alphabet[c] = #alphabet
-        end
-        encoded[i] = alphabet[c]
-    end
-
-    return alphabet, encoded
-end
-
--- function for one hot encoding
-function ints_to_one_hot(ints, width)
-    local height = ints:size()[1]
-    local zeros = torch.zeros(height, width)
-    local indices = ints:view(-1, 1):long()
-    local one_hot = zeros:scatter(2, indices, 1)
-
-    return one_hot
 end
 
 function make_chunk_iterator(encoded_text, indices, chunk_size, n_symbols)
@@ -129,11 +103,13 @@ function make_batch_iterators(text, split_fractions, chunk_size, batch_size)
     return alphabet, batch_iterators
 end
 
-local text = load_text()
-local fractions = torch.Tensor{0.25, 0.75}
-local alphabet, batch_iterators = make_batch_iterators(text, fractions, 2, 2)
+-- export the following functions globally
+batcher.make_batch_iterators = make_batch_iterators
+batcher.make_batch_iterator = make_batch_iterator
+batcher.stack = stack
+batcher.make_chunk_iterators = make_chunk_iterators
+batcher.split_indices = split_indices
+batcher.load_text = load_text
+batcher.make_chunk_iterator = make_chunk_iterator
 
-for i, batch_iterator in pairs(batch_iterators) do
-    print("> Batch Iterator: " .. i)
-    print(batch_iterator())
-end
+return batcher
