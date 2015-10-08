@@ -61,6 +61,7 @@ function split_indices(indices, split_fractions)
     for i = 1, split_points:size(1) - 1 do
         local lower, upper = split_points[i] + 1, split_points[i + 1]
         splits[i] = indices[{{lower, upper}}]
+        -- can use indices:narrow(dim, index, size) to create split here
     end
 
     return splits
@@ -75,7 +76,7 @@ function make_chunk_iterators(text, split_fractions, chunk_size)
     local splits = split_indices(indices, split_fractions)
 
     local iterators = {}
-    for _, split in pairs(splits) do
+    for i, split in pairs(splits) do
         iterator = make_chunk_iterator(encoded_text, split, chunk_size, #alphabet)
         iterators[#iterators + 1] = iterator
     end
@@ -83,10 +84,56 @@ function make_chunk_iterators(text, split_fractions, chunk_size)
     return alphabet, iterators
 end
 
+function stack(tensors)
+    local shape = torch.totable(tensors[1]:size())
+    table.insert(shape, 1, #tensors)
+
+    local result = torch.Tensor(torch.LongStorage(shape))
+    for i = 1, #tensors do
+        result[i] = tensors[i]
+    end
+
+    return result
+end
+
+function make_batch_iterator(chunk_iterator, batch_size)
+    function co()
+        local batch = {}
+        while true do
+            local chunk = chunk_iterator()
+            if chunk then
+                batch[#batch + 1] = chunk
+            else
+                break
+            end
+
+            if #batch == batch_size then
+                coroutine.yield(stack(batch))
+                batch = {}
+            end
+
+        end
+    end
+
+    return coroutine.wrap(co)
+end
+
+function make_batch_iterators(text, split_fractions, chunk_size, batch_size)
+    local alphabet, chunk_iterators = make_chunk_iterators(text, split_fractions, chunk_size)
+
+    local batch_iterators = {}
+    for _, chunk_iterator in pairs(chunk_iterators) do
+        batch_iterators[#batch_iterators + 1] = make_batch_iterator(chunk_iterator, batch_size)
+    end
+
+    return alphabet, batch_iterators
+end
+
 local text = load_text()
 local fractions = torch.Tensor{0.25, 0.75}
-local alphabet, iterators = make_chunk_iterators(text, fractions, 2)
+local alphabet, batch_iterators = make_batch_iterators(text, fractions, 2, 2)
 
-for i, iterator in pairs(iterators) do
-    print(iterator())
+for i, batch_iterator in pairs(batch_iterators) do
+    print("> Batch Iterator: " .. i)
+    print(batch_iterator())
 end
