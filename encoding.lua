@@ -55,7 +55,8 @@ end
 function one_hot_to_ints(ont_hot)
     -- y,i=torch.max(x,1) returns the largest element in each column (across
     -- rows) of x, and a tensor i of their corresponding indices in x.
-    local _, ints = torch.max(one_hot:t(), 1)
+    -- y,i=torch.max(x,2) performs the max operation across rows.
+    local _, ints = torch.max(one_hot, 2)
     return ints
 end
 
