@@ -22,6 +22,25 @@ function char_to_ints(text)
     return alphabet, encoded
 end
 
+function invert_alphabet(alphabet)
+    local inverted = {}
+    for char, code in pairs(alphabet) do
+        inverted[code] = char
+    end
+
+    return inverted
+end
+
+function ints_to_chars(alphabet, ints)
+    -- with the current code, there is no need to invert because the alphabet
+    -- table already contains inverted key value pair.
+    local decoder = invert_alphabet(alphabet)
+    local decoded = {}
+    for i = 1, ints:size(1) do
+        decoded[i] = decoder[ints[i]]
+    end
+end
+
 -- function for one hot encoding
 function ints_to_one_hot(ints, width)
     local height = ints:size()[1]
@@ -30,6 +49,14 @@ function ints_to_one_hot(ints, width)
     local one_hot = zeros:scatter(2, indices, 1)
 
     return one_hot
+end
+
+-- function from one hot encoding to ints
+function one_hot_to_ints(ont_hot)
+    -- y,i=torch.max(x,1) returns the largest element in each column (across
+    -- rows) of x, and a tensor i of their corresponding indices in x.
+    local _, ints = torch.max(one_hot:t(), 1)
+    return ints
 end
 
 -- export the following functions globally
