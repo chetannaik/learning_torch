@@ -18,7 +18,7 @@ function make_chunk_iterator(encoded_text, indices, chunk_size, n_symbols)
     function co()
         for i=1, indices:size(1) do
             local index = indices[i]
-            local lower = (index - 1)*chunk_size
+            local lower = (index - 1) * chunk_size + 1
             local upper = lower + chunk_size - 1
             local chunk = ints_to_one_hot(encoded_text[{{lower, upper}}], n_symbols)
             coroutine.yield(chunk)
