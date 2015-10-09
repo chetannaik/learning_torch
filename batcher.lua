@@ -30,6 +30,8 @@ end
 
 function split_indices(indices, split_fractions)
     local split_sizes = (split_fractions*indices:size(1)):long()
+    -- x=torch.cat(x_1,x_2,[dimension]) returns a tensor x which is the
+    -- concatenation of tensors x_1 and x_2 along dimension `dimension`.
     local split_points = torch.cat(torch.LongTensor{0}, split_sizes:cumsum())
     local splits = {}
     for i = 1, split_points:size(1) - 1 do
