@@ -236,5 +236,62 @@ t1 = t[1][3]
 t2 = t[2][4]
 
 -- METHOD 2
-t1 = t[{{}, {3}}] -- print 3rd column, all rows
+-- ROW/COLUMN SELECTION
+t1 = t[{1, 3}] -- equivalent to t[1][3]
+t2 = t[{{}, 3}] -- print 3rd column, all rows
+t2 = t[{2, {3, 5}}] -- print 2nd row columns 3 to 5
 
+-- SUBSET/SUB TENSOR SELECTION
+-- select a subset and returns a REFERENCE to original tensor
+t3 = t[{{2, 3}, {3, 5}}]
+-- selects a subset, CLONES and returns a new tensor
+t4 = t:sub(2, 3, 3, 5)
+-- selects a subset and returns a REFERENCE to original tensor
+t5 = t:narrow(1, 2, 2)
+t6 = t:narrow(1, 2, 2):narrow(2, 3, 3)
+
+-- can use select(dim, index) to perform tensor slicing
+
+-- select using INDEX
+-- index(dim, index)
+-- Returns a new Tensor which indexes the original Tensor along dimension dim
+-- using the entries in torch.LongTensor index. The returned Tensor does
+-- not use the same storage as the original Tensor.
+t = torch.Tensor(4, 5):random(1, 9)
+t2 = t:index(1, torch.LongTensor{3,1})
+
+-- select using GATHER
+-- gather(dim, index)
+-- Creates a new Tensor from the original tensor by gathering a number of
+-- values from each "row", where the rows are along the dimension dim. The
+-- values in a LongTensor, passed as index, specify which values to take from
+-- each row.
+t = torch.Tensor(5, 5):random(1, 9)
+t2 = t:gather(1, torch.LongTensor{{1, 2, 3, 4, 5}, {2, 3, 4, 5, 1}})
+
+-- select using SCATTER
+-- scatter(dim, index, src|val)
+-- Writes all values from tensor src or the scalar val into self at the
+-- specified indices. The indices are specified with respect to the given
+-- dimension, dim, in the manner described in gather.
+t = torch.rand(2, 4)
+t2 = torch.zeros(4, 4):scatter(1, torch.LongTensor{{1, 2, 4 ,3}, {3, 4 ,2, 1}}, t)
+
+-- select using MASKED SELECT
+-- maskedSelect(mask)
+-- Returns a new Tensor which contains all elements aligned to a 1 in the
+-- corresponding mask. This mask is a torch.ByteTensor of zeros and ones.
+t = torch.range(1, 12):double():resize(3, 4)
+mask = torch.ByteTensor(2, 6):bernoulli()
+t2 = t:maskedSelect(mask)
+
+
+----------------------
+-- TENSOR FUNCTIONS --
+----------------------
+-- ref: https://github.com/torch/torch7/blob/master/doc/tensor.md
+-- apply
+-- map
+-- map2
+-- split
+-- chunk
