@@ -1,0 +1,66 @@
+digraph G {
+	graph [bb="0,0,396,548"];
+	node [label="\N",
+		shape=oval
+	];
+	n1	 [color=darkolivegreen3,
+		fillcolor=darkolivegreen3,
+		fontcolor=darkgreen,
+		height=1.041,
+		label="Output (1)\nmodule = nn.CAddTable\lmapindex = {Node3,Node4}",
+		pos="198,128",
+		style=filled,
+		tooltip="[simple1.lua]:14",
+		width=3.4842];
+	n2	 [height=0.74639,
+		label="Node2\ninput = {}",
+		pos="198,27",
+		tooltip="[[C]]:-1",
+		width=1.449];
+	n1 -> n2	 [pos="e,198,53.924 198,90.417 198,81.802 198,72.626 198,64.035"];
+	n3	 [color=deepskyblue2,
+		fillcolor=deepskyblue2,
+		fontcolor=dodgerblue4,
+		height=0.74639,
+		label="Input 1 (3)\nmodule = nn.Identity",
+		pos="94,229",
+		style=filled,
+		tooltip="[simple1.lua]:4",
+		width=2.6216];
+	n3 -> n1	 [pos="e,161.16,164.07 120.24,203.02 130.41,193.34 142.34,181.99 153.75,171.12"];
+	n4	 [color=deepskyblue2,
+		fillcolor=deepskyblue2,
+		fontcolor=dodgerblue4,
+		height=0.74639,
+		label="Input 2 (4)\nmodule = nn.Identity",
+		pos="302,229",
+		style=filled,
+		tooltip="[simple1.lua]:9",
+		width=2.6216];
+	n4 -> n1	 [pos="e,234.84,164.07 275.76,203.02 265.59,193.34 253.66,181.99 242.25,171.12"];
+	n5	 [height=1.041,
+		label="Node5\ninput = {}\lselectindex = 1",
+		pos="106,330",
+		tooltip="[[C]]:-1-1",
+		width=1.978];
+	n5 -> n3	 [pos="e,97.142,255.92 101.57,292.42 100.52,283.8 99.409,274.63 98.368,266.04"];
+	n6	 [height=1.041,
+		label="Node6\ninput = {}\lselectindex = 2",
+		pos="290,330",
+		tooltip="[[C]]:-1-2",
+		width=1.978];
+	n6 -> n4	 [pos="e,298.86,255.92 294.43,292.42 295.48,283.8 296.59,274.63 297.63,266.04"];
+	n7	 [height=0.74639,
+		label="Node7\nnSplitOutputs = 2",
+		pos="186,431",
+		tooltip="[[C]]:-1-mnode",
+		width=2.2781];
+	n7 -> n5	 [pos="e,133.3,364.79 165.61,404.76 157.71,394.99 148.46,383.54 139.63,372.62"];
+	n7 -> n6	 [pos="e,256.12,363.25 211.98,405.27 223.04,394.74 236.21,382.2 248.56,370.45"];
+	n8	 [height=0.74639,
+		label="Node8\ninput = {}",
+		pos="186,521",
+		tooltip="[[C]]:-1",
+		width=1.449];
+	n8 -> n7	 [pos="e,186,458.05 186,494.07 186,486 186,476.94 186,468.3"];
+}

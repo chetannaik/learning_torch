@@ -1,0 +1,47 @@
+digraph G {
+	graph [bb="0,0,260,848"];
+	node [label="\N",
+		shape=oval
+	];
+	n1	 [height=1.3356,
+		label="Node1\ninput = {Tensor[10]}\lmodule = nn.Linear(10 -> 1)\lgradOutput = {Tensor[1]}",
+		pos="130,160",
+		tooltip="[simple2.lua]:5",
+		width=3.4744];
+	n2	 [height=1.041,
+		label="Node2\ninput = {Tensor[1]}\lgradOutput = {Tensor[1]}",
+		pos="130,38",
+		tooltip="[[C]]:-1",
+		width=3.2079];
+	n1 -> n2	 [pos="e,130,75.722 130,111.57 130,103.1 130,94.269 130,85.81"];
+	n3	 [height=1.3356,
+		label="Node3\ninput = {Tensor[10]}\lmodule = nn.Tanh\lgradOutput = {Tensor[10]}",
+		pos="130,292",
+		tooltip="[simple2.lua]:5",
+		width=3.346];
+	n3 -> n1	 [pos="e,130,208.48 130,243.7 130,235.54 130,226.99 130,218.6"];
+	n4	 [height=1.3356,
+		label="Node4\ninput = {Tensor[10]}\lmodule = nn.Linear(10 -> 10)\lgradOutput = {Tensor[10]}",
+		pos="130,424",
+		tooltip="[simple2.lua]:5",
+		width=3.6126];
+	n4 -> n3	 [pos="e,130,340.48 130,375.7 130,367.54 130,358.99 130,350.6"];
+	n5	 [height=1.3356,
+		label="Node5\ninput = {Tensor[10]}\lmodule = nn.Tanh\lgradOutput = {Tensor[10]}",
+		pos="130,556",
+		tooltip="[simple2.lua]:5",
+		width=3.346];
+	n5 -> n4	 [pos="e,130,472.48 130,507.7 130,499.54 130,490.99 130,482.6"];
+	n6	 [height=1.3356,
+		label="Node6\ninput = {Tensor[20]}\lmodule = nn.Linear(20 -> 10)\lgradOutput = {Tensor[10]}",
+		pos="130,688",
+		tooltip="[simple2.lua]:4",
+		width=3.6126];
+	n6 -> n5	 [pos="e,130,604.48 130,639.7 130,631.54 130,622.99 130,614.6"];
+	n7	 [height=1.041,
+		label="Node7\ninput = {Tensor[20]}\lgradOutput = {Tensor[20]}",
+		pos="130,810",
+		tooltip="[[C]]:-1",
+		width=3.346];
+	n7 -> n6	 [pos="e,130,736.5 130,772.34 130,764.22 130,755.42 130,746.68"];
+}
