@@ -34,6 +34,7 @@
 - CharRNN: [`link`](https://github.com/karpathy/char-rnn)
 - CharCNN: [`link`](https://github.com/zhangxiangxiao/Crepe)
 - RNN: [`link`](https://github.com/Element-Research/rnn)
+- RNN Playground: [`link`](https://github.com/jachiam/rnn-playground)
 - facebook - bAbI tasks: [`link`](https://github.com/facebook/bAbI-tasks)
 - facebook - Neural Attention Model for Abstractive Summarization: [`link`](https://github.com/facebook/NAMAS)
 - Kaggle - Denoising Dirty Documents: [`link`](https://github.com/toshi-k/Kaggle-Denoising-Dirty-Documents)
