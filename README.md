@@ -28,6 +28,7 @@
 - Curated list of Torch tutorials: [`link`](https://github.com/carpedm20/awesome-torch#tutorials)
 - Awesome Recurrent Neural Networks: [`link`](https://github.com/kjw0612/awesome-rnn)
 - Neural Network Papers: [`link`](https://github.com/robertsdionne/neural-network-papers#convolutional-recurrent-neural-networks)
+- Awesome Deep Learning: [`link`](https://github.com/ChristosChristofidis/awesome-deep-learning)
 
 ##### Code References:
 - Word2Vec in Torch: [`link`](https://github.com/yoonkim/word2vec_torch) [`link`](https://github.com/rotmanmi/word2vec.torch)
