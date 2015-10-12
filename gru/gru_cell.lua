@@ -8,7 +8,7 @@ Paper reference: http://arxiv.org/pdf/1412.3555v1.pdf
 GRU Architecture:
 1. (Update gate) : u_gate = sigm( W_z * x + U_z * h_prev )
 2. (Reset gate)  : r_gate = sigm( W_r * x + U_r * h_prev )
-3. (New memory)  : h_temp = tanh( W_t * x + r_gate ◦ U_t * h_prev ) 
+3. (New memory)  : h_temp = tanh( W_t * x + r_gate ◦ U_t * h_prev )
 4. (Hidden state): h_next = ((1 − u_gate) ◦ h_temp) + (u_gate ◦ h_prev)
 
 where, ◦ - elementwise product
@@ -64,6 +64,8 @@ local function gru_cell(input_size, hidden_size)
 
     -- make a module by combining all the above submodules into a graph
     local module = nn.gModule({x, h_prev}, {h_next})
+
+    return module
 end
 
 return gru_cell
