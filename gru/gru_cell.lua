@@ -51,10 +51,10 @@ local function gru_cell(input_size, hidden_size)
     local r_gate = nn.Sigmoid()(xh2h_r_gate)
 
     -- compute temporary/candidate hidden state
-    local h_reset = nn.CMulTable(r_gate, h_prev)
+    local h_reset = nn.CMulTable()({r_gate, h_prev})
     local h_transformed = nn.Linear(hidden_size, hidden_size)(h_reset)
     local x_transformed = nn.Linear(input_size, hidden_size)(x)
-    local h_temp = nn.Tanh(nn.CAddTable()({x_transformed, h_transformed}))
+    local h_temp = nn.Tanh()(nn.CAddTable()({x_transformed, h_transformed}))
 
     -- compute new hidden state
     local u_gate_compliment = nn.AddConstant(1, false)(nn.MulConstant(-1, false)(u_gate))
