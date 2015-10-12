@@ -23,7 +23,7 @@ as follows
 Returns a nn Module output from nngraph gModule()
 ]]--
 
-local function gru_cell(input_size, hidden_size)
+local function BuildCell(input_size, hidden_size)
 
     -- input placeholders
     local x = nn.Identity()()
@@ -68,4 +68,4 @@ local function gru_cell(input_size, hidden_size)
     return module
 end
 
-return gru_cell
+return BuildCell
