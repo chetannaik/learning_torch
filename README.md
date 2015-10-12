@@ -11,23 +11,23 @@
 ##### TODO
 - [x] Go through Torch documentation and try using useful functions.
 - [x] Go through other useful modules and try to use them.
-- [ ] Check and use
-  [`Moses`](https://github.com/Yonaba/Moses/blob/master/doc/tutorial.md)
-- [ ] Go through [`nn`](https://github.com/torch/nn) module documentation and check
-  how some to the functionality is implemented
 - [x] Start implementing something real
   - [x] Read and process process data as needed by the network.
-  - [ ] Read [`LSTM: A Search Space Odyssey`](http://arxiv.org/pdf/1503.04069v1.pdf)
-  and implement LSTM.
-  - [ ] Read [`Learning Phrase Representations using RNN Encoder–Decoder
+  - [x] Read [`Learning Phrase Representations using RNN Encoder–Decoder
   for Statistical Machine Translation`](http://arxiv.org/pdf/1406.1078.pdf) and
   implement a GRU.
+  - [ ] Read [`LSTM: A Search Space Odyssey`](http://arxiv.org/pdf/1503.04069v1.pdf)
+  and implement LSTM.
   - [ ] Use Tree LSTM in place of LSTM. [`Paper`](http://www.aclweb.org/anthology/P/P15/P15-1150.pdf) [`Code`](https://github.com/stanfordnlp/treelstm) [`Slides`](http://kaishengtai.github.io/static/slides/treelstm-acl2015.pdf)
+- [ ] Check and use
+[`Moses`](https://github.com/Yonaba/Moses/blob/master/doc/tutorial.md)
+- [ ] Go through [`nn`](https://github.com/torch/nn) module documentation and check
+how some to the functionality is implemented
 
 ##### Resources:
 - Curated list of Torch tutorials: [`link`](https://github.com/carpedm20/awesome-torch#tutorials)
 - Awesome Recurrent Neural Networks: [`link`](https://github.com/kjw0612/awesome-rnn)
-- Neural Network Papers: [`link`](https://github.com/robertsdionne/neural-network-papers#convolutional-recurrent-neural-networks)
+- Neural Network Papers: [`link`](https://github.com/robertsdionne/neural-network-papers)
 
 ##### Code References:
 - Word2Vec in Torch: [`link`](https://github.com/yoonkim/word2vec_torch) [`link`](https://github.com/rotmanmi/word2vec.torch)
