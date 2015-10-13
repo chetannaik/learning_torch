@@ -18,7 +18,7 @@ For a batch size (B), input size (I) and hidden size (H), the sizes should be
 as follows
 
     x: BxI
-    prev_h: BxH
+    h_prev: BxH
 
 Returns a nn Module output from nngraph gModule()
 ]]--
