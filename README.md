@@ -16,7 +16,7 @@
   - [x] Read [`Learning Phrase Representations using RNN Encoder–Decoder
   for Statistical Machine Translation`](http://arxiv.org/pdf/1406.1078.pdf) and
   implement a GRU.
-  - [ ] Read [`LSTM: A Search Space Odyssey`](http://arxiv.org/pdf/1503.04069v1.pdf)
+  - [x] Read [`LSTM: A Search Space Odyssey`](http://arxiv.org/pdf/1503.04069v1.pdf)
   and implement LSTM.
   - [ ] Use Tree LSTM in place of LSTM. [`Paper`](http://www.aclweb.org/anthology/P/P15/P15-1150.pdf) [`Code`](https://github.com/stanfordnlp/treelstm) [`Slides`](http://kaishengtai.github.io/static/slides/treelstm-acl2015.pdf)
 - [ ] Go through
